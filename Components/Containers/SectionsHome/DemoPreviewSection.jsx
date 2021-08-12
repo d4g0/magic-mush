@@ -4,7 +4,7 @@ const DemoPreviewSection = (props) => {
 
     return(
         <div>
-            <Carousel />
+            <Carousel story={props.story} />
         </div>
     )
 }

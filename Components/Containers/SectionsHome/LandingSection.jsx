@@ -3,7 +3,7 @@ import Image from 'next/image'
 const LandingSection = (props) => {
     return(
        <div>
-            <div className="flex flex-wrap overflow-hidden sm:-mx-8 md:-mx-6 lg:-mx-10 xl:-mx-5 mt-2 ">
+            <div className="flex flex-wrap overflow-hidden ">
 
                 <div className="w-full flex-1 overflow-hidden sm:my-8 sm:px-8 md:my-6 md:px-6 lg:my-10 lg:px-10 xl:my-5 xl:px-5 xl:w-1/2 pb-5">
                     <h1 className= 'mt-16 ml-28'>
@@ -17,9 +17,9 @@ const LandingSection = (props) => {
                     </p>
                 </div>
                 
-                <div className="w-full flex-1 overflow-hidden sm:my-8 sm:px-8 md:my-6 md:px-6 lg:my-10 lg:px-10 xl:my-5 xl:px-5 xl:w-1/2">
-                    <div className='flex  justify-center items-center mt-24 mr-16' >
-                    <Image width='400' height='550' className='shadow rounded-xl align-middle border-none' src={props.story.content.ProyectImg.filename} />
+                <div className="w-full flex-1 overflow-hidden sm:my-8 sm:px-8 md:my-6 md:px-6 lg:my-10 lg:px-18 xl:my-5 xl:px-5 xl:w-1/2">
+                    <div className='flex  justify-center items-center mt-24 mr-12' >
+                        <Image width='400' height='550' className='shadow rounded-xl align-middle border-none' src={props.story.content.ProyectImg.filename} />
                     </div>
                 </div>
 

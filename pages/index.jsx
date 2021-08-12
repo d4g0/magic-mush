@@ -1,7 +1,10 @@
 import Head from "next/head";
 import LandingSection from "Components/Containers/SectionsHome/LandingSection";
+
+import StoryblokClient from "storyblok-js-client";
+
 import DemoPreviewSection from "Components/Containers/SectionsHome/DemoPreviewSection";
-import getDataFromStory from "misc/getDataFromStory";
+
 
 const Home = (props) => {
 
@@ -15,7 +18,7 @@ const Home = (props) => {
 
       <main className='min-h-screen w-full text-on-surface'>
         <LandingSection story={props.story.LandingSection} ></LandingSection>
-        <DemoPreviewSection> </DemoPreviewSection>
+        <DemoPreviewSection story={props.story.DemosPreviewSection} > </DemoPreviewSection>
       </main>
 
       <footer className=''></footer>
@@ -27,17 +30,29 @@ export default Home
   
 export async function getStaticProps(){
 
-    const dataLanding = await getDataFromStory('landing')
+    const StoryBlok = new StoryblokClient({})
 
-    const story = await fetch('https://api.storyblok.com/v2/cdn/stories/home/?version=draft&token=FGf07FidAUQaK4gWRQoCrgtt&cv=1628740006')
-    const data  = await story.json()
-    console.log(data)
+    const datalanding = await StoryBlok.get( process.env.BASE_URL + 'landing' + process.env.API_CONFIG )
 
+    const datademos = {}
+    datademos.demo1 = await StoryBlok.get( process.env.BASE_URL + 'demospreviewsection/demo1' + process.env.API_CONFIG )
+    datademos.demo2 = await StoryBlok.get( process.env.BASE_URL + 'demospreviewsection/demo2' + process.env.API_CONFIG )
+    
     const props = {
       story: {
         LandingSection: {
           name: 'Landing',
-          content: dataLanding 
+          content: datalanding.data.story.content
+        },
+        DemosPreviewSection: {
+          Demo1: {
+            name: datademos.demo1.data.story.content.Name,
+            img: datademos.demo1.data.story.content.Img.filename
+          },
+          Demo2: {
+            name: datademos.demo2.data.story.content.Name,
+            img: datademos.demo2.data.story.content.Img.filename
+          }
         }
       }
     }
@@ -46,7 +61,3 @@ export async function getStaticProps(){
   }
 }
 
-/*
-    https://api.storyblok.com/v2/cdn/stories/home/landing?version=draft&token=FGf07FidAUQaK4gWRQoCrgtt&
-   'https://api.storyblok.com/v2/cdn/stories/home/demopreviewsection/demo1/' + process.env.API_CONFIG
-*/
